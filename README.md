@@ -44,14 +44,14 @@ conda env create -f tf-environment.yml
 
 ## Running
 
-Cloning the source code by running:
+Clone the source code by running:
 
 ```
 git clone https://github.com/YavarYeganeh/AIF_Meeting_EEC.git
 cd ./AIF_Meeting_EEC
 ```
 
-Then, training the agent by running:
+Then, train the agent by running:
 
 ```
 python train.py --batch <batch_size> --gamma <gamma_value> --steps <number_of_steps> --samples <number_of_samples> --calc_mean
@@ -60,7 +60,7 @@ python train.py --batch <batch_size> --gamma <gamma_value> --steps <number_of_st
 
 usage: train.py [-h]
 
-* **--batch** : Select batch size of the environments.
+* **--batch** : Select batch size, i.e., number environments used for training.
 * **--gamma** : Select gamma value (between 0 and 1) for balancing between short and long horizons during planning.
 * **--steps** : Number of actions the transition considers (in multi-step transitions).
 * **--samples** : Number of samples to be used for Expected Free Energy (EFE) calculations.
