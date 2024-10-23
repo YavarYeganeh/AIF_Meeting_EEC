@@ -189,7 +189,6 @@ for epoch in range(start_epoch, epochs + 1):
     while replay_buffer.size() < replay_size:
         o0, o1, pi0, log_Ppi, r, os0, os1, pis = u.batch_observe(env, model, sim_interval, batch_size=args.batch, steps=args.steps)     
         replay_buffer.record_interaction(o0=o0, o1=o1, pi0=pi0, r=r, os0=os0, os1=os1, pis=pis)
-    # print('Pre-filling of the replay buffer is now done!')
 
     # untrained testing and stat recording 
     if epoch == 1:  

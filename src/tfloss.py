@@ -83,10 +83,8 @@ def compute_loss_down(model_down, o1, ps1_mean, ps1_logvar, omega, displacement 
 
     # TERM: Eq[log P(o1|s1)]
     # --------------------------------------------------------------------------
-    # bin_cross_entr = o1 * tf.math.log(displacement + po1) + (1 - o1) * tf.math.log(displacement + 1 - po1) # Binary Cross Entropy
     bin_cross_entr = o1_bm * tf.math.log(displacement + po1_bm) + (1 - o1_bm) * tf.math.log(displacement + 1 - po1_bm) # Binary Cross Entropy
 
-    # logpo1_s1 = tf.reduce_sum(bin_cross_entr, axis=[1,2,3])
     logpo1_s1_bm = tf.reduce_sum(bin_cross_entr, axis=[1])
 
     # Calculate RMSE between o1_r and po_r
@@ -101,7 +99,6 @@ def compute_loss_down(model_down, o1, ps1_mean, ps1_logvar, omega, displacement 
     scaled_mse = scaling_factor * mse
 
     logpo1_s1 = logpo1_s1_bm + scaled_mse
-
 
     # TERM: Eqpi D_kl[Q(s1)||N(0.0,1.0)]
     # --------------------------------------------------------------------------
@@ -126,8 +123,6 @@ def compute_loss_down(model_down, o1, ps1_mean, ps1_logvar, omega, displacement 
         
     loss_terms = (-logpo1_s1, kl_div_s, kl_div_s_anal, kl_div_s_naive, kl_div_s_naive_anal)
     return F, loss_terms, po1, qs1
-
-
 
 
 """"" For dqn """

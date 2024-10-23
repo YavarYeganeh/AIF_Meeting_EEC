@@ -235,14 +235,6 @@ class Prod_System:  # This is the environment with whom the agent interacts
 
         return data_buffer[closest_timestamp], closest_timestamp
 
-    # slow
-    def start_timestamp_initial(self, data_buffer):
-        target_timestamp = self.env.now - reward_time_span
-        if target_timestamp < 0:
-            target_timestamp = 0
-        closest_timestamp = min(data_buffer.keys(), key=lambda x: abs(x - target_timestamp))
-        return data_buffer[closest_timestamp], closest_timestamp
-
 
     def start_timestamp_left(self, data_buffer):
         """ This function prioritize closest timestamp on the left side of the target if existing"""
@@ -265,50 +257,6 @@ class Prod_System:  # This is the environment with whom the agent interacts
             del data_buffer[key]
 
 
-    def reward_old(self):
-    
-        """ Original reward implementation:
-            def agent_reward(self, alpha, prod_new, cons_new, cons_old, time):
-
-                r_th = math.exp((60 * prod_new / time) / self.max_TH)
-
-                if prod_new == 0 and alpha == 0:
-                    r_cons = 1
-                elif prod_new == 0 and alpha != 0:
-                    r_cons = 0
-                else:
-                    r_cons = math.exp(- 0.001 * (cons_new - cons_old))
-
-                reward = (alpha / math.e) * r_th + (1 - alpha) * r_cons
-
-                return reward       
-        """
-
-        time_env = self.workstations[0].env.now
-
-        # removing the warm-up profile
-        if self.warmup:
-
-            if self.warmup_time < time_env:
-                time = time_env - self.warmup_time
-            else:
-                time = time_env
-        else:
-            time = time_env
-
-        r_th = math.exp((60 * self.workstations[0].prod_new / time) / self.max_TH[0])
-
-        if self.workstations[0].prod_new == 0 and self.alpha == 0:
-            r_cons = 1
-        elif self.workstations[0].prod_new == 0 and self.alpha != 0:
-            r_cons = 0
-        else:
-            r_cons = math.exp(- 0.001 * (self.workstations[0].cons_new - self.workstations[0].cons_old))
-
-        reward = (self.alpha / math.e) * r_th + (1 - self.alpha) * r_cons
-
-        return reward
-    
     def observation(self):
         
         o = np.zeros(self.o_dim, dtype=np.float32)
@@ -439,6 +387,7 @@ class System:
                     self.systems[i].workstations[j].machines[k].consumption_startup = 0  # useful for energy consumption calculation
                     self.systems[i].workstations[j].machines[k].consumption_standby = 0  # useful for energy consumption calculation
                     self.systems[i].workstations[j].machines[k].consumption_tot = 0   # useful for energy consumption calculation
+
 
 
 # """" Printing Results for Testing """

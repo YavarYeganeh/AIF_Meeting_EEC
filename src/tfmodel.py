@@ -176,7 +176,6 @@ class ActiveInferenceModel:
         self.pi_dim = pi_dim
         tf.keras.backend.set_floatx(self.precision)
 
-        # self.model_top = ModelTop(s_dim, pi_dim, self.tf_precision, self.precision)
         self.model_top = ModelTop(o_dim, pi_dim, self.tf_precision, self.precision)
         self.model_mid = ModelMid(s_dim, steps, self.tf_precision, self.precision)
         self.model_down = ModelDown(s_dim, self.tf_precision, self.precision, o_dim=o_dim, po_dim=po_dim)
@@ -199,8 +198,6 @@ class ActiveInferenceModel:
         self.calc_mean = calc_mean
         self.steps = steps
         self.pi_steps_repeated = tf.constant(np.tile(np.arange(pi_dim).reshape(-1, 1), (1, steps)), dtype=tf.float32)
-
-        
 
     def save_weights(self, folder_chp):
         self.model_down.qs_net.save_weights(folder_chp+'/checkpoint_qs')
@@ -244,7 +241,6 @@ class ActiveInferenceModel:
 
     # modified for the production systems with mean along the batches
     def check_reward(self, o):
-        # return tf.reduce_mean(calc_reward_prod(o),axis=[0]) * 10.0 # Incorrect as this not a batch
         reward = calc_reward_prod(o) * 10.0
         return reward
 
@@ -271,8 +267,7 @@ class ActiveInferenceModel:
         
         
         for t in range(depth):
-            # print('h1')
-            # G, terms, s1, ps1_mean, po1 = self.calculate_G(s0_temp, pi, samples=samples)
+
             G, terms, s1, ps1_mean, po1 = self.calculate_G(o, s0_temp, pis=self.pi_steps_repeated, samples=self.samples) # q networks maps o to actions
 
             sum_terms[0] += terms[0]
@@ -294,32 +289,23 @@ class ActiveInferenceModel:
     def calculate_G(self, o0, s0, pis, samples=10):
 
         # Hybrid
-        # log_q_pi = self.model_top.encode_o(o0)[-1]
-        # # print("pi0", pi0)
-        # q_prod = tf.multiply(log_q_pi, pi0) # pi0 is one-hot vector representing the action 
         q_pi = self.model_top.encode_o(o0)[-2]
-        # print("pi0", pi0)
         q_prod = tf.multiply(q_pi, self.pi_one_hot) # pi0 is one-hot vector representing the action 
-        # q_term = - tf.reduce_sum(q_prod, axis=1) # controlling the system in opposite direction
         q_term = tf.reduce_sum(q_prod, axis=1)
-        # print("q...", log_q_pi, q_prod, q_term, "\n")
 
         term0 = tf.zeros([s0.shape[0]], self.tf_precision)
         term1 = tf.zeros([s0.shape[0]], self.tf_precision)
         for _ in range(samples):
             ps1, ps1_mean, ps1_logvar = self.model_mid.transition_with_sample(pis, s0)
             po1 = self.model_down.decoder(ps1)
-            # print('__________po1', po1.shape)
-            # tf.print('__________po1', po1.shape)
             spo1 = po_max_sampler(po1) # po is a distribution with different structure with o1 and can't be directly fed into the encoder
             qs1, _, qs1_logvar = self.model_down.encoder_with_sample(spo1)
 
-            # E [ log P(o|pi) ]  # Eq. 7a
-            # print('hhhhh___hhhh>>>>',po1.shape)
+            # E [ log P(o|pi) ] 
             logpo1 = self.check_reward(po1)
             term0 += logpo1
 
-            # E [ log Q(s|pi) - log Q(s|o,pi) ]  # Eq. 7b  # why different from ...
+            # E [ log Q(s|pi) - log Q(s|o,pi) ]  
             term1 += - tf.reduce_sum(entropy_normal_from_logvar(ps1_logvar) + entropy_normal_from_logvar(qs1_logvar), axis=1)
         term0 /= float(samples)
         term1 /= float(samples)
@@ -329,32 +315,22 @@ class ActiveInferenceModel:
         for _ in range(samples):
             # Term 2.1: Sampling different thetas, i.e. sampling different ps_mean/logvar with dropout!
             s1_temp1 = self.model_mid.transition_with_sample(pis, s0)[0]
-            # tf.print('__________s1_temp1', s1_temp1)
             po1_temp1 = self.model_down.decoder(s1_temp1)
-            # tf.print('__________po1_temp1', po1_temp1)#.eval(session=sess)))
+
             # term2_1 += tf.reduce_sum(entropy_bernoulli(po1_temp1),axis=[1,2,3])
             term2_1 += tf.reduce_sum(entropy_bernoulli(po1_temp1),axis=[1])
-            # tf.print('term2_1',term2_1)
+
             # Term 2.2: Sampling different s with the same theta, i.e. just the reparametrization trick!
             s1_temp2 = self.model_down.reparameterize(ps1_mean, ps1_logvar)
-            # tf.print('__________s1_temp2', s1_temp2)
             po1_temp2 = self.model_down.decoder(s1_temp2)
-            # tf.print('__________po1_temp2', po1_temp2)
-            # term2_2 += tf.reduce_sum(entropy_bernoulli(po1_temp2),axis=[1,2,3])
             term2_2 += tf.reduce_sum(entropy_bernoulli(po1_temp2),axis=[1])
-            # tf.print('term2_2',term2_2)
+
         term2_1 /= float(samples)
         term2_2 /= float(samples)
         # E [ log [ H(o|s,th,pi) ] - E [ H(o|s,pi) ]
         term2 = term2_1 - term2_2
-        # print('((((((-------))))))', term2_1, term2_2)
 
-        # G = - term0 + term1 + term2
-
-        # G = self.gamma_hybrid*q_term + (1-self.gamma_hybrid)*(- term0 + term1 + term2)
         efe_term = tf.nn.softmax(-(- term0 + term1 + term2))
         G = self.gamma_hybrid*q_term + (1-self.gamma_hybrid)*(efe_term)
-        # tf.print('efe_term ->', efe_term, 'q_term ->', q_term, 'G ->', G)
 
-        # return G, [q_term, term0, term1], ps1, ps1_mean, po1
         return G, [q_term, term0, term1, term2], ps1, ps1_mean, po1  # for hybrid
