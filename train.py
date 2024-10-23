@@ -41,7 +41,6 @@ parser.add_argument('--calc_mean', action='store_true', help='Whether mean shoul
 args = parser.parse_args()
 
 
-
 '''
 a: The sum a+d show the maximum value of omega
 b: This shows the average value of D_kl[pi] that will cause half sigmoid (i.e. d+a/2)
@@ -300,22 +299,6 @@ for epoch in range(start_epoch, epochs + 1):
 
         current_omega_b = np.repeat(current_omega, repeats=(o0b.shape[0]/args.batch), axis=0)  # broadcasting current omega for the batch as omega can't be computed with replay buffer as it is following the current decision/policy (i.e., log_Ppi) and therefore should be computed with the latest policy
 
-
-        # # -- TRAIN MIDDLE LAYER ------------------------------------------------ can be trained with replay buffer
-        # qs0b,m_b,l_b = model.model_down.encoder_with_sample(o0b)
-        # qs1b_mean, qs1b_logvar = model.model_down.encoder(o1b)
-        # ps1b_mean, ps1b_logvar = loss.train_model_mid(model_mid=model.model_mid, s0=qs0b, qs1_mean=qs1b_mean, qs1_logvar=qs1b_logvar, Ppi_sampled=pi0b, omega=current_omega_b, optimizer=optimizers['mid'])  
-
-        # # -- TRAIN DOWN LAYER -------------------------------------------------- can be trained with replay buffer
-        # loss.train_model_down(model_down=model.model_down, o1=o1b, ps1_mean=ps1b_mean, ps1_logvar=ps1b_logvar, omega=current_omega_b, optimizer=optimizers['down'])
-        
-        # # print('updates are now finished!')
-
-
-        # # -- COMPUTING LOSS TERMS -------------------------------------------------- 
-        # F_mid, loss_terms_mid, ps1b, ps1b_mean, ps1b_logvar = loss.compute_loss_mid(model_mid=model.model_mid, s0=qs0b, Ppi_sampled=pi0b, qs1_mean=qs1b_mean, qs1_logvar=qs1b_logvar, omega=current_omega_b)
-        # F_down, loss_terms, po1b, qs1b = loss.compute_loss_down(model_down=model.model_down, o1=o1b, ps1_mean=ps1b_mean, ps1_logvar=ps1b_logvar, omega=current_omega_b)
-
         # -- TRAIN MIDDLE LAYER ------------------------------------------------ can be trained with replay buffer
         qss0b, _, _ = model.model_down.encoder_with_sample(os0b)
         qss1b_mean, qss1b_logvar = model.model_down.encoder(os1b)
@@ -324,12 +307,9 @@ for epoch in range(start_epoch, epochs + 1):
         # -- TRAIN DOWN LAYER -------------------------------------------------- can be trained with replay buffer
         loss.train_model_down(model_down=model.model_down, o1=os1b, ps1_mean=pss1b_mean, ps1_logvar=pss1b_logvar, omega=current_omega_b, optimizer=optimizers['down'])
         
-        # print('updates are now finished!')
-
         # -- COMPUTING LOSS TERMS -------------------------------------------------- 
         F_mid, loss_terms_mid, pss1b, pss1b_mean, pss1b_logvar = loss.compute_loss_mid(model_mid=model.model_mid, s0=qss0b, Ppi_sampled=pisb, qs1_mean=qss1b_mean, qs1_logvar=qss1b_logvar, omega=current_omega_b)
         F_down, loss_terms, pos1b, qss1b = loss.compute_loss_down(model_down=model.model_down, o1=os1b, ps1_mean=pss1b_mean, ps1_logvar=pss1b_logvar, omega=current_omega_b)
-
 
         # # train-level stats
         stats['F'][epoch].append(np.mean(F_down) + np.mean(F_mid) + np.mean(F_top))
@@ -346,7 +326,6 @@ for epoch in range(start_epoch, epochs + 1):
         stats['buffer_recon'][epoch].append(u.buffer_recon(o1b, pos1b)[0]) # using Euclidean distance over batches
         stats['machine_state_recon'][epoch].append(u.machine_state_recon(o1b, pos1b))
         stats['reward'][epoch].append(np.mean(o1[:,-1]))  # batch isn't necessary
-
 
     # Only recording means of each epoch of train-level stats (to reduce the size of the file)
     stats['F'][epoch] = np.mean(stats['F'][epoch])

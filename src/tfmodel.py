@@ -150,7 +150,7 @@ class ModelDown(tf.keras.Model):
     @tf.function
     def encoder(self, o):
         # tf.print('o.shape',o.shape)
-        grad_check = tf.debugging.check_numerics(self.qs_net(o), 'check_numerics caught bad temptemptemptemptemp3')
+        grad_check = tf.debugging.check_numerics(self.qs_net(o), 'check_numerics: Caught bad numerics for self.qs_net(o)!')
         mean_s, logvar_s = tf.split(self.qs_net(o), num_or_size_splits=2, axis=1)
         return mean_s, logvar_s
 
@@ -164,7 +164,6 @@ class ModelDown(tf.keras.Model):
         mean, logvar = self.encoder(o)
         s = self.reparameterize(mean, logvar)
         return s, mean, logvar
-
 
 class ActiveInferenceModel:
 
@@ -245,7 +244,6 @@ class ActiveInferenceModel:
 
     # modified for the production systems with mean along the batches
     def check_reward(self, o):
-        # print('oshape', o.shape,'sdss', calc_reward_prod(o).shape,'buuuuuuuuuuuuuu',tf.reduce_mean(calc_reward_prod(o),axis=[0]).shape)
         # return tf.reduce_mean(calc_reward_prod(o),axis=[0]) * 10.0 # Incorrect as this not a batch
         reward = calc_reward_prod(o) * 10.0
         return reward
