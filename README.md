@@ -13,6 +13,10 @@ Key Contributions:
 - **Hybrid Horizon and Multi-Step Transition Methods:** These enhancements allow the agent to improve prediction and planning for longer horizons without computational burden.
 - **Performance:** Experimental results show the effectiveness of enhancements compared to the existing agents as well as the potential of the proposed methodology. Notably, the agent achieved high rewards with simple one-step repeated multi-transition lookaheads.
 
+<p align="center">
+<img src="img/results_fig-4.png" style="width: 500px;" alt="Results_lambda-1"></p>
+
+
 ## Repository Contents:
 
 This repository contains the implementation of the **deep active inference agent** and includes source code for controlling parallel and identical machines. The code supports experimentation with different planning and control strategies to optimize energy consumption in real-time. The models and code are available for further exploration and development.
