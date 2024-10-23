@@ -20,8 +20,6 @@ def softmax_multi_with_log(x, single_values=7, eps=1e-20, temperature=10.0): # a
 
 def compare_reward(o1, po1):
     ''' Using MSE. '''
-    # logpo1 = np.square(o1[:,-1] - po1[:,-1])
-    # print("logpo1", logpo1, logpo1.mean(axis=-1))
     logpo1 = np.square(o1[:,-1] - po1[:,-1]).mean(axis=-1)
     return logpo1
 
@@ -36,12 +34,9 @@ def buffer_recon(o1, po1):
     bo1 = bn * o1[:,:11]
     bo1 = bo1.sum(1)
     bpo1 = bn * po1[:,:11]
-    # print("bpo1",bpo1,type(bpo1))
     bpo1 = tf.reduce_sum(bpo1, axis=1)
-    # bpo1 = bpo1.sum(1)
     
     distance = np.linalg.norm(bo1 - bpo1) # Euclidean distance
-    # mae = abs(bo1 - bpo1).mean()
     mae = tf.reduce_mean(tf.abs(bo1 - bpo1))
     return distance, mae
 
@@ -67,33 +62,18 @@ def prod_planner(o, batch_id, model):
 
     if model.decision == 'aif':
 
-        # print('(((())))', o)
         o = np.array(o, dtype=np_precision).reshape(1,-1)
         o_repeated = o.repeat(7,0) # The 0th dimensionS
-
-        # print("o\n", o.shape)
 
         sum_G, sum_terms, po2 = model.calculate_G_prod(o_repeated)
 
         terms1 = -sum_terms[0]
-        # print(sum_terms)
         terms12 = -sum_terms[0]+sum_terms[1]
 
         Ppi = sum_G.numpy() # new hybrid aif, which is already similar to Ppi
         log_Ppi = np.log(Ppi + 1e-20)  # 1e-20 is added for numerical stability
 
-
-        # print("o\n", o, "t\n", t, '\nsum_G\n', sum_G, '\nsum_terms\n', sum_terms, '\npo2\n', po2)
-
-        # print(Ppi,'sdsdsdsdsd\n')
-
-        # pi_choice = np.random.choice(7,p=Ppi[0])
         pi_choice = np.random.choice(7,p=Ppi)
-
-
-        # print('=========== Decision for workstation', batch_id, '->', pi_choice)
-
-        # print('== Workstation', batch_id, '->', pi_choice, 'with o', o)
 
         # One hot version..
         pi0 = np.zeros(7, dtype=np_precision)
@@ -102,7 +82,6 @@ def prod_planner(o, batch_id, model):
         model.o_i[batch_id].append(o)
         model.o_t[batch_id].append(o)
 
-        # model.a_i[batch_id].append((pi0, log_Ppi, pi_choice))
         model.a_t[batch_id].append((pi0, log_Ppi))
         model.a_i[batch_id].append(pi_choice)
 
@@ -163,43 +142,6 @@ class ReplayBuffer:
         return len(self.buffer)
 
 
-# class ReplayBuffer:
-#     def __init__(self, capacity):
-#         self.capacity = capacity
-#         self.buffer = []
-#         self.position = 0
-
-#     def record_interaction(self, o0, o1, pi0, r):
-#         experience = (o0, o1, pi0, r)
-#         self.add(experience)
-
-#     def clear_buffer(self):
-#         self.buffer = []
-#         self.position = 0
-
-#     def get_last_interaction(self):
-#         if len(self.buffer) < 2:
-#             return None, None, None, None
-
-#         last_experience = self.buffer[self.position - 1]
-#         second_last_experience = self.buffer[self.position - 2]
-
-#         return second_last_experience, last_experience
-
-#     def add(self, experience):
-#         if len(self.buffer) < self.capacity:
-#             self.buffer.append(experience)
-#         else:
-#             self.buffer[self.position % self.capacity] = experience
-#         self.position = (self.position + 1) % self.capacity
-
-#     def sample(self, batch_size):
-#         return random.sample(self.buffer, batch_size)
-    
-#     def size(self):
-#         return len(self.buffer)
-
-
 def batch_observe(env, model, sim_interval, batch_size, steps):
 
     if min(len(model.o_i[i]) for i in range(batch_size)) < steps:
@@ -255,7 +197,6 @@ def batch_observe(env, model, sim_interval, batch_size, steps):
                         # print(system.systems[j].__dict__, '\n', system.systems[j].workstations[0].__dict__, '\n', system.systems[j].workstations[0].machines[0].__dict__, '\n',system.systems[j].workstations[0].machines[0].__dict__, '\n',system.systems[j].workstations[0].machines[1].__dict__, '\n',system.systems[j].workstations[0].machines[2].__dict__, '\n',system.systems[j].workstations[0].machines[3].__dict__, '\n',system.systems[j].workstations[0].machines[4].__dict__, '\n',system.systems[j].workstations[0].machines[5].__dict__, '\n')
                 # print(model.o_t)
                 raise Exception('Too long for running events but without having all batches!')
-    # print("after while", round)
 
     o0 = [model.o_t[b][0] for b in range(batch_size)]
     o0 = np.array(o0, dtype=np_precision).reshape(batch_size,-1)
