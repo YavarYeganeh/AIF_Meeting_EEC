@@ -16,11 +16,32 @@ This project explores **deep active inference**, an emerging field that combines
 <p align="center">
 <img src="img/results_fig-4.png" style="width: 500px;" alt="Results_lambda-1"></p>
 
-
-#### Repository Contents:
+## Content
 
 This repository contains the implementations of the project, including source code for the agent as well as the manufacturing environment simulator used for experiments.
 
+## Requirements:
+
+You need a Python environment with the following libraries (and other supporting ones):
+
+```
+torch>=2.1.1
+numpy>=1.24.3
+simpy>=4.0.1
+```
+
+You can install them with pip by running:
+
+```
+pip install -r requirements.txt
+```
+
+Alternatively, you can use Conda with the YAML file provided in the repository:
+
+```
+conda env create -f tf-environment.yml
+
+```
 
 ## Citation
 
