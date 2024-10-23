@@ -40,7 +40,15 @@ Alternatively, you can use Conda with the YAML file provided in the repository:
 
 ```
 conda env create -f tf-environment.yml
+```
 
+## Running
+
+Cloning the source code:
+
+```
+git clone https://github.com/YavarYeganeh/AIF_Meeting_EEC.git
+cd ./AIF_Meeting_EEC
 ```
 
 ## Citation
