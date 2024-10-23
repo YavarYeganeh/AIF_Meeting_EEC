@@ -1,5 +1,8 @@
 
-## [*Active Inference Meeting Energy-Efficient Control of Parallel and Identical Machines*](https://arxiv.org/abs/2406.09322)
+<h2 align="center"><a href="https://arxiv.org/abs/2406.09322">Active Inference Meeting Energy-Efficient Control <br> of Parallel and Identical Machines</a></h2>
+
+<p align="center">
+<img src="img/AIF-EEC_Sep-Agent-modules-HL.jpg" alt="AIF-EEC_Agent-Modules"></p>
 
 
 ## Citation
