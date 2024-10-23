@@ -1,6 +1,10 @@
-<h2 align="center"><a href="https://arxiv.org/abs/2406.09322">Active Inference Meeting Energy-Efficient Control <br> of Parallel and Identical Machines</a></h2><p align="center">
-  <b>Yavar Taheri Yeganeh</b>, <b>Mohsen Jafari</b>, <b> and Andrea Matta</b>
-</p>
+<h2 align="center"><a href="https://arxiv.org/abs/2406.09322">Active Inference Meeting Energy-Efficient Control <br> of Parallel and Identical Machines</a></h2>  
+<p align="center">
+    <a href="https://yavaryeganeh.github.io/">Yavar Taheri Yeganeh</a>
+    ·
+    <a href="https://ise.rutgers.edu/mohsen-jafari">Mohsen Jafari</a>
+    ·
+    <a href="https://www.mecc.polimi.it/en/research/faculty/prof-andrea-matta">Andrea Matta</a>
 
 
 ![AIF-EEC_Agent-Modules](img/AIF-EEC_Sep-Agent-modules-HL.jpg)
