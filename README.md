@@ -6,6 +6,7 @@
     ·
     <a href="https://www.mecc.polimi.it/en/research/faculty/prof-andrea-matta">Andrea Matta</a>
 
+---
 
 ![AIF-EEC_Agent-Modules](img/AIF-EEC_Sep-Agent-modules-HL.jpg)
 
