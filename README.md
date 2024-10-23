@@ -58,13 +58,13 @@ python train.py --batch <batch_size> --gamma <gamma_value> --steps <number_of_st
 
 ```
 
-usage: train.py [-h]
+**Usage: train.py [-h]**
 
-* **--batch** : Select batch size, i.e., number environments used for training.
+* **--batch** : Select batch size, i.e., the number of environments used for training.
 * **--gamma** : Select gamma value (between 0 and 1) for balancing between short and long horizons during planning.
 * **--steps** : Number of actions the transition considers (in multi-step transitions).
 * **--samples** : Number of samples to be used for Expected Free Energy (EFE) calculations.
-* **--calc_mean** : Whether to consider the mean during EFE calculations (flag to include mean).
+* **--calc_mean** : Whether to consider the mean during EFE calculations (flag to include the mean).
 
 ## Citation
 
