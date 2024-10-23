@@ -68,7 +68,7 @@ python train.py --batch <batch_size> --gamma <gamma_value> --steps <number_of_st
 
 **Please note:** $\lambda_s$ can be directly set in `src/tfmodel.py`, and by default in this source code, $\lambda_s = 1.5$.
 
-After training 
+After training is finished, the code records data related to the performance and statistics of the agent from the experiment in the path `results/signature/stats_final.pkl`.
 
 ## Citation
 
