@@ -7,7 +7,7 @@ This project explores **deep active inference**, an emerging field that combines
 
 - The project is based on a **[paper](https://arxiv.org/abs/2406.09322)** presented and accepted in the proceedings of the***10th International Conference on machine Learning, Optimization and Data science (LOD '24)***.
 
-Key Contributions:
+#### Key Contributions:
 
 - **Deep Active-Inference-Based Agent:** With active inference integrating perception, learning, and action, the agent is tailored and enhanced for optimizing machine control in the stochastic manufacturing environment with delayed policy response.
 - **Hybrid Horizon and Multi-Step Transition Methods:** These enhancements allow the agent to improve prediction and planning for longer horizons without computational burden.
@@ -17,9 +17,10 @@ Key Contributions:
 <img src="img/results_fig-4.png" style="width: 500px;" alt="Results_lambda-1"></p>
 
 
-## Repository Contents:
+#### Repository Contents:
 
-This repository contains the implementation of the **deep active inference agent** and includes source code for controlling parallel and identical machines. The code supports experimentation with different planning and control strategies to optimize energy consumption in real-time. The models and code are available for further exploration and development.
+This repository contains the implementations of the project, including source code for the agent as well as the manufacturing environment simulator used for experiments.
+
 
 ## Citation
 
