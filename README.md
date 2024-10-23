@@ -1,9 +1,9 @@
-
 <h2 align="center"><a href="https://arxiv.org/abs/2406.09322">Active Inference Meeting Energy-Efficient Control <br> of Parallel and Identical Machines</a></h2>
 
 <p align="center">
 <img src="img/AIF-EEC_Sep-Agent-modules-HL.jpg" alt="AIF-EEC_Agent-Modules"></p>
 
+This project explores **deep active inference**, an emerging field that combines **deep learning** with the **active inference** decision-making framework. Leveraging a deep active inference agent, we focus on controlling **parallel and identical machine workstations** to **enhance energy efficiency**. We address challenges posed by the problem's stochastic nature and delayed policy response by introducing tailored enhancements.
 
 ## Citation
 
