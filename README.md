@@ -44,12 +44,28 @@ conda env create -f tf-environment.yml
 
 ## Running
 
-Cloning the source code:
+Cloning the source code by running:
 
 ```
 git clone https://github.com/YavarYeganeh/AIF_Meeting_EEC.git
 cd ./AIF_Meeting_EEC
 ```
+
+Then, training the agent by running:
+
+```
+python train.py --batch <batch_size> --gamma <gamma_value> --steps <number_of_steps> --samples <number_of_samples> --calc_mean
+
+```
+
+usage: train_script.py [-h]
+
+* **--batch** : Select batch size.
+* **--gamma** : Select gamma value for balancing the hybrid Expected Free Energy (EFE). Controls the balance between short and long horizons in the EFE calculation.
+* **--steps** : Number of actions the transition considers (multi-step transitions).
+* **--samples** : Number of samples to be used for EFE calculations.
+* **--calc_mean** : Whether to consider the mean during EFE calculations (flag to include mean).
+
 
 ## Citation
 
