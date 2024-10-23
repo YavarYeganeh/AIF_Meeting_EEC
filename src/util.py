@@ -224,57 +224,6 @@ def batch_observe(env, model, sim_interval, batch_size, steps):
 
     return o0, o1, pi0, log_Ppi, r, os0, os1, pis
 
-
-# def batch_observe(env, model, sim_interval, batch_size, steps):
-
-#     # empty the lists to obtain new observations 
-#     for i in range(batch_size):
-#         model.o_t[i] = []
-#         model.a_t[i] = []
-
-#     new_o_for_all = False
-
-#     s = 0
-
-#     sim_time = env.now
-#     while not new_o_for_all:
-
-#         env.run(until=sim_time + sim_interval)
-#         sim_time += sim_interval
-
-#         # we check whether 2nd element of observations is obtained for all
-#         try: 
-#             [model.o_t[b][1] for b in range(batch_size)] # check
-#             new_o_for_all = True
-#             # s = 0
-#         except:
-#             s += 1
-#             if s>=1000:
-#                 for j in range(batch_size):
-#                     try:
-#                         model.o_t[j][1]
-#                     except:
-#                         print("\nThe following workstation hasn't called decsion for at least 999 steps:\n", len(model.o_i[j]),model.o_i[j][-1], 'with action:', model.a_i[j][-1][2],'\n')
-#                         # print(system.systems[j].__dict__, '\n', system.systems[j].workstations[0].__dict__, '\n', system.systems[j].workstations[0].machines[0].__dict__, '\n',system.systems[j].workstations[0].machines[0].__dict__, '\n',system.systems[j].workstations[0].machines[1].__dict__, '\n',system.systems[j].workstations[0].machines[2].__dict__, '\n',system.systems[j].workstations[0].machines[3].__dict__, '\n',system.systems[j].workstations[0].machines[4].__dict__, '\n',system.systems[j].workstations[0].machines[5].__dict__, '\n')
-#                 # print(model.o_t)
-#                 raise Exception('Too long for running events but without having all batches!')
-#     # print("after while", round)
-
-#     o0 = [model.o_t[b][0] for b in range(batch_size)]
-#     o0 = np.array(o0, dtype=np_precision).reshape(batch_size,-1)
-
-#     o1 = [model.o_t[b][1] for b in range(batch_size)]  
-#     o1 = np.array(o1, dtype=np_precision).reshape(batch_size,-1)
-#     r = o1[:,-1].reshape(batch_size,-1)  # reward/preference for updating the q
-
-#     pi0 = [model.a_t[b][0][0] for b in range(batch_size)]
-#     pi0 = np.array(pi0, dtype=np_precision).reshape(batch_size,-1)
-    
-#     log_Ppi = [model.a_t[b][0][1] for b in range(batch_size)]
-#     log_Ppi = np.array(log_Ppi, dtype=np_precision).reshape(batch_size,-1)
-
-#     return o0, o1, pi0, log_Ppi, r
-
 """ creating/resting dictionary for observations and efe """
 def reset_recordings(model, batch_size):
 
