@@ -62,7 +62,6 @@ Then, train the agent by running:
 
 ```
 python train.py --batch <batch_size> --gamma <gamma_value> --steps <number_of_steps> --samples <number_of_samples> --calc_mean
-
 ```
 
 **Usage: train.py [-h]**
