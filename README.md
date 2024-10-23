@@ -66,6 +66,10 @@ python train.py --batch <batch_size> --gamma <gamma_value> --steps <number_of_st
 * **--samples** : Number of samples to be used for Expected Free Energy (EFE) calculations.
 * **--calc_mean** : Whether to consider the mean during EFE calculations (flag to include the mean).
 
+**Please note:** $\lambda_s$ can be directly set in `src/tfmodel.py`, and by default in this source code, $\lambda_s = 1.5$.
+
+After training 
+
 ## Citation
 
 Yeganeh, Y. T., Jafari, M., & Matta, A. (2024). Active Inference Meeting Energy-Efficient Control of Parallel and Identical Machines. arXiv preprint arXiv:2406.09322.
