@@ -34,7 +34,7 @@ from src.tfutils import *
 
 parser = argparse.ArgumentParser(description='Training script.')
 parser.add_argument('-b', '--batch', type=int, default=1, help='Select batch size.')
-parser.add_argument('-g', '--gamma', type=float, default=0.0, help='Select gamma for balance in the hybrid EFE') # gamma_hybrid hyperparameter responsible for controlling the balance between short and long horizon in EFE
+parser.add_argument('-g', '--gamma', type=float, default=0.0, help='Select gamma for balance in the hybrid planning') # gamma_hybrid hyperparameter responsible for controlling the balance between short and long horizon in EFE
 parser.add_argument('-s', '--steps', type=int, default=30, help='How many actions the transition considers') 
 parser.add_argument('--samples', type=int, default=10, help='How many samples should be used to calculate EFE') 
 parser.add_argument('--calc_mean', action='store_true', help='Whether mean should be considered during calculation of EFE')

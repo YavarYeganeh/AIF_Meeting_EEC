@@ -20,7 +20,7 @@ This project explores **deep active inference**, an emerging field that combines
 
 This repository contains the implementations of the project, including source code for the agent as well as the manufacturing environment simulator used for experiments.
 
-## Requirements:
+## Requirements
 
 You need a Python environment with the following libraries (and other supporting ones):
 
@@ -58,14 +58,13 @@ python train.py --batch <batch_size> --gamma <gamma_value> --steps <number_of_st
 
 ```
 
-usage: train_script.py [-h]
+usage: train.py [-h]
 
-* **--batch** : Select batch size.
-* **--gamma** : Select gamma value for balancing the hybrid Expected Free Energy (EFE). Controls the balance between short and long horizons in the EFE calculation.
-* **--steps** : Number of actions the transition considers (multi-step transitions).
-* **--samples** : Number of samples to be used for EFE calculations.
+* **--batch** : Select batch size of the environments.
+* **--gamma** : Select gamma value (between 0 and 1) for balancing between short and long horizons during planning.
+* **--steps** : Number of actions the transition considers (in multi-step transitions).
+* **--samples** : Number of samples to be used for Expected Free Energy (EFE) calculations.
 * **--calc_mean** : Whether to consider the mean during EFE calculations (flag to include mean).
-
 
 ## Citation
 
