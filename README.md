@@ -12,7 +12,7 @@
 
 This project explores **deep active inference**, an emerging field that combines **deep learning** with the **active inference** decision-making framework. Leveraging a deep active inference agent, we focus on **controlling** **parallel and identical machine workstations** to **enhance energy efficiency**. We address challenges posed by the problem's stochastic nature and delayed policy response by introducing tailored enhancements.
 
-- The project is based on a **[paper](https://arxiv.org/abs/2406.09322)** presented and accepted in the proceedings of the***10th International Conference on machine Learning, Optimization and Data science (LOD '24)***.
+- The project is based on a **[paper](https://arxiv.org/abs/2406.09322)** presented and accepted in the proceedings of the ***10th International Conference on machine Learning, Optimization and Data science (LOD '24)***.
 
 #### Key Contributions:
 
