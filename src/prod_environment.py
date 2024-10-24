@@ -31,8 +31,7 @@ ALPHA = 0.97 # shouldn't be 1 or 0 as those need some adjustments in the code se
 
 reward_time_span = 8 * 60 * 60  # in seconds
 
-"Production System is the Environment, it contains workstations and machines"
-
+"""Production System is the Environment, it contains workstations and machines"""
 class Prod_System:  # This is the environment with whom the agent interacts
 
     def __init__(self, env, dmodel, cap, num_ws, num_m, pw_busy, pw_idle, pw_startup, pw_standby, mttf, mttr, st, pt, alpha, policy):
@@ -74,8 +73,6 @@ class Prod_System:  # This is the environment with whom the agent interacts
         self.warmup_time = 0 # for removing the warmup profile from the reward function; default 0 as it will be set after warmup() called from the parent class! 
 
         for i in range(self.num_ws):  # There is a "for" cycle because it considers when there are more WS, here it
-            # is useless but I kept it for ease of computation
-
             self.workstations.append(Last_Workstation(self.env, self, i, self.bufcap[i], self.num_m[i], self.pw_busy[i], self.pw_idle[i], self.pw_startup[i], self.pw_standby[i], self.mttf[i], self.mttr[i], self.st[i], self.pt[i]))
 
             max_prod = (60 / (self.pt[i] / (self.num_m[i]))) * (self.mttf[i]/(self.mttf[i] + self.mttr[i]))  # I need max_th for reward function
@@ -100,7 +97,6 @@ class Prod_System:  # This is the environment with whom the agent interacts
 
         # checking to truncate the buffer in the interest of the memory and speed
         if min(self.parts_made_buffer.keys()) < timestamp - 1.1 * reward_time_span:
-        # if min(self.parts_made_buffer.keys()) < timestamp - 2 * reward_time_span:
             self.truncate_buffer(self.parts_made_buffer)
     
 
@@ -111,7 +107,6 @@ class Prod_System:  # This is the environment with whom the agent interacts
 
         # checking to truncate the buffer in the interest of the memory and speed
         if min(self.consumption_tot_buffer.keys()) < timestamp - 1.1 * reward_time_span:
-        # if min(self.consumption_tot_buffer.keys()) < timestamp - 2 * reward_time_span:
             self.truncate_buffer(self.consumption_tot_buffer)
 
 

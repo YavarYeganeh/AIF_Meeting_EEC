@@ -392,15 +392,15 @@ for epoch in range(start_epoch, epochs + 1):
 
     if epoch % record_frequency == 0:
 
-        # saving the stats dictionary for further analysis during training
+        # save the stats dictionary for further analysis during training
         stats_path = folder_results + '/stats_epoch_' + str(epoch) + '.pkl'
 
-        # Save the dictionary to a binary file using pickle
+        # save the dictionary to a binary file using pickle
         with open(stats_path, 'wb') as file:
             pickle.dump(stats, file)
 
 
-# saving the stats dictionary for further analysis 
+# save the stats dictionary for further analysis 
 stats_path = folder_results + '/stats_final.pkl'
 
 # save the dictionary to a binary file using pickle

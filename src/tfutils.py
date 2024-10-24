@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 
+
 log_2_pi = np.log(2.0*np.pi)
 log_2_pi_e = np.log(2.0*np.pi*np.e)
 
@@ -47,7 +48,7 @@ def total_correlation(data):
     return 0.5*(np.log(np.diag(Cov)).sum() - np.linalg.slogdet(Cov)[1])
 
 
-""" Activation for "po" with the structure 10 + 1 + 6*5 + 1+1+1""" # no delta-t exists in the observation and reward in 3 dim
+""" Activation for "po" with the structure 10 + 1 + 6*5 + 3""" 
 @tf.function
 def separate_softmax_sigmoid(x): 
     buffer_index = 10 + 1 
