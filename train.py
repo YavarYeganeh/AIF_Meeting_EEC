@@ -47,12 +47,16 @@ b: This shows the average value of D_kl[pi] that will cause half sigmoid (i.e. d
 c: This moves the steepness of the sigmoid
 d: This is the minimum omega (when sigmoid is zero)
 '''
+
+"""
+ 8 of hours or one shift of the manufacturing environment is around ~ 3000 steps
+"""
 var_a = 1.0;         var_b = 25.0;          var_c = 5.0;         var_d = 1.5
 s_dim = 512;          pi_dim = 7;            beta_s = 1.0;        beta_o = 1.0;
 gamma = 0.0;         gamma_rate = 0.01;     gamma_max = 0.8;     gamma_delay = 30
 l_rate_top = 1e-04;  l_rate_mid = 1e-04;    l_rate_down = 1e-04
-ROUNDS = 1000;       epochs = 40;  # 8 hours of time span is ~ 3000 steps
-replay_capacity = 500; replay_size = 200 #200;  ## replay capacity of initial 500!
+epochs = 30; ROUNDS = 1000; 
+replay_capacity = 500; replay_size = 200 
 discount = 0.99; update_target_frequency = 500;
 test_frequency = 1; record_frequency = 1;
 
