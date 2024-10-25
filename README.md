@@ -23,7 +23,7 @@ This project explores **deep active inference**, an emerging field that combines
 <p align="center">
 <img src="img/results_fig-4.png" style="width: 500px;" alt="Results_lambda-1"></p>
 
-## Content
+## Contents
 
 This repository contains the implementations of the project, including source code for the agent as well as the manufacturing environment simulator used for experiments.
 
