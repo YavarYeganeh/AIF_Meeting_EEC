@@ -91,4 +91,4 @@ Yeganeh, Y. T., Jafari, M., & Matta, A. (2024). Active Inference Meeting Energy-
 
 ## Contact
 
-For inquiries or collaboration, please reach out to **yavar.taheri@polimi.it** or **yavar.yeganeh@gmail.com**.
+For inquiries or collaboration, please reach out to **yavar.taheri@polimi.it** or **yavaryeganeh@gmail.com**.
