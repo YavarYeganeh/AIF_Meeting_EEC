@@ -78,7 +78,7 @@ After training is finished, the code records data related to the performance and
 
 ## Citation
 
-Taheri Yeganeh, Y., Jafari, M., & Matta, A. (2024, September). Active Inference Meeting Energy-Efficient Control of Parallel and Identical Machines. In International Conference on Machine Learning, Optimization, and Data Science (pp. 479-493). Cham: Springer Nature Switzerland.
+Taheri Yeganeh, Y., Jafari, M., & Matta, A. (2024, September). Active Inference Meeting Energy-Efficient Control of Parallel and Identical Machines. In *International Conference on Machine Learning, Optimization, and Data Science*
 ```
 @inproceedings{taheri2024active,
   title={Active Inference Meeting Energy-Efficient Control of Parallel and Identical Machines},
